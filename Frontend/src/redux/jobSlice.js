@@ -1,0 +1,25 @@
+import { createSlice } from "@reduxjs/toolkit";
+import { act } from "react";
+
+const jobSlice = createSlice({
+    name:"job",
+    initialState:{
+        allJobs:[],
+        singleJob:null,
+    },
+    reducers:{
+        //actions
+        setAllJobs:(state,action)=>{
+            state.allJobs = action.payload;
+        },
+        setSingleJob:(state,action) => {
+            state.singleJob = action.payload
+        }
+    }
+})
+export const {setAllJobs,setSingleJob} =  jobSlice.actions;
+export default jobSlice.reducer
+
+// state.auth → holds authentication-related data
+
+// state.job → holds job-related data like allJobs

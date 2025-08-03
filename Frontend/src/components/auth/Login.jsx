@@ -1,16 +1,28 @@
 import React, { useState } from "react";
 import Navbar from "../shared/Navbar";
 import { Label } from "@radix-ui/react-label";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+ 
 import {
   RadioGroup,
   RadioGroupItem,
 } from "@/components/ui/radio-group"
+import {USER_API_END_POINT} from '@/utils/constant';
 
 import { Input } from "@/components/input"; // ✅ Adjust the path if needed
 import { Button } from "../button";
 import { Link } from "react-router-dom";
+import { toast } from "sonner";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoading, setUser } from "@/redux/authSlice";
+import { Loader, Loader2 } from "lucide-react";
+
 const Login = () => {
 
+  const loading = useSelector(store=>store.auth.loading)
+  const navigate = useNavigate();
+const dispatch = useDispatch();
   const[input,setInput] = useState({
     email:"",
     password:"",
@@ -24,26 +36,29 @@ const Login = () => {
 
     const submitHandler = async (e) =>{
       e.preventDefault();
-      
-      if(input.file){
-        formData.append("file",input.file)
-      }
 
-      try{
-        const res = await axios.post(`${USER_API_END_POINT}/register`,input,{
+         try{
+          dispatch(setLoading(true))
+        const response = await axios.post(`${USER_API_END_POINT}/login`,input,{
           headers:{
             "Content-Type":"application/json"
           },
-          withCredentials:true
+          withCredentials:true 
         })
-        if(res.data.success){
+        
+        if(response.data.success){
+          dispatch(setUser(response.data.user))
           navigate("/")
-          toast.success(res.data.message);
+          toast.success(response.data.message);
+        }else{
+                toast.error("Something went wrong. Please try again.");
         }
-      }catch(err){
-        console.log(err);
-        toast.error(error.response.data.message);
+      }catch(error){
+        console.log("Login Error:", error);
+       // toast.error(error.response.data.message);
 
+      }finally{
+        dispatch(setLoading(false))
       }
     }
 
@@ -84,8 +99,12 @@ const Login = () => {
               </div>
             </RadioGroup>
           </div>
-
+          {
+            loading ? 
+            <Button className="w-full my-4"> <Loader2 className="mr-2 h-4 w-4 animate-spin"/>Please Wait</Button>  : 
           <Button type="submit" className="w-full my-4 bg-gray-800 text-white">Login</Button>
+
+          }
           <span className="text-small">Don't have an account? <Link to="/signup" className="text-blue-600">Signup</Link> </span>
         </form>
       </div>
