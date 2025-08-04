@@ -7,11 +7,13 @@ import { useNavigate } from 'react-router-dom'
 import useGetAllCompanies from '@/hooks/useGetAllCompanies'
 import { useDispatch } from 'react-redux'
 import { setSearchCompanyByText } from '@/redux/companySlice'
+import AdminJobsTable from './AdminJobsTable'
+import UseGetAllAdminJobs from '@/hooks/UseGetAllAdminJobs'
 
 
-const Companies = () => {
-  useGetAllCompanies()
-  const[input,setInput] = useState()
+const AdminJobs = () => {
+  UseGetAllAdminJobs();
+  const[input,setInput] = useState("")
     const navigate = useNavigate(); 
     const dispatch = useDispatch()
      useEffect(()=>{
@@ -29,14 +31,11 @@ const Companies = () => {
                  />
            
             
-           <Button onClick={() => navigate("/admin/companies/create")}>New Company</Button>
+           <Button onClick={() => navigate("/admin/jobs/create")}> New Jobs</Button>
              </div>
-
-     <CompaniesTable/> 
-
+  <AdminJobsTable/>
          </div>
     </div>
   )
 }
-
-export default Companies
+export default AdminJobs

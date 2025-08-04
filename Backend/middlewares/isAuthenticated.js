@@ -3,6 +3,11 @@ import jwt from "jsonwebtoken";
 const isAuthenticated = async(req,res,next)=>{
     try{
         const token = req.cookies.token;
+        
+//         axios.post('http://localhost:8000/api/v1/job/post', jobData, {
+//   withCredentials: true
+// })
+
         if(!token){
             return res.status(401).json({
                 message:"User not authenticated",

@@ -25,14 +25,23 @@ export const postJob = async(req,res)=>{
             created_by:userId
         })
         return res.status(201).json({
-            message:"New job created succesfully.",
+            message:"New job created successfully.",
             job,
             success:true
         })
-    }catch(error){
-        console.log(error);
-        
     }
+    // catch(error){
+    //     console.log(error);
+        
+    // }
+    catch (error) {
+    console.error(error);
+    return res.status(500).json({
+        message: "Internal server error",
+        error: error.message,
+        success: false
+    });
+}
 }
 
 export const getAllJobs = async(req,res)=>{
@@ -100,7 +109,10 @@ export const getAdminJobs = async(req,res)=>{
 
          const adminId = new mongoose.Types.ObjectId(req.id); // FIXED
 
-     const jobs = await Job.find({created_by:adminId})
+     const jobs = await Job.find({created_by:adminId}).populate({
+         path:'company',
+         createdAt:-1
+     })
          if(!jobs){
             return res.status(404).json({
                 message:"Jobs not found",

@@ -116,20 +116,27 @@ export const updateProfile = async (req,res)=>{
         //   console.log(fullname,email,phoneNumber,bio,skills);
 
         const file = req.file;
+        
         const fileUri = getDataUri(file)
         const cloudResponse = await cloudinary.uploader.upload(fileUri.content,{
              resource_type: "raw", // ✅ IMPORTANT
           folder: "TalentNest/resumes"// it downloads the file
         })
 
-    //cloudinary comes here
+    //cloudinary comes here 
 
     let skillsArray;
+     if (!req.id) {
+            return res.status(401).json({ message: "Unauthorized", success: false });
+        }
+
 if(skills){
      skillsArray = skills.split(',')
 }
     const userId = req.id;//middleware authentication
-    let user = await User.findById(userId);
+   // let user = await User.findById(userId); update
+           let user = await User.findById(req.id);
+
     if(!user){
         return res.status(400).json({
             message:"User not found",
@@ -168,6 +175,10 @@ return res.status(200).json({
 })
     }catch(error){
         console.log(error);
-        
+         return res.status(500).json({
+            message: "Internal Server Error",
+            success: false,
+            error: error.message
+        });
     }
 }

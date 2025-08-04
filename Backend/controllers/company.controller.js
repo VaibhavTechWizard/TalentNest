@@ -1,4 +1,6 @@
 import Company from "../models/company.model.js";
+import getDataUri from '../utils/datauri.js';
+import cloudinary from '../utils/cloudinary.js';
 
 export const registerCompany = async(req,res)=>{
     try{
@@ -75,11 +77,17 @@ export const getCompanyId = async (req,res)=>{
 export const updateCompany=async (req,res)=>{
     try{
         const {name,description,website,location} = req.body;
+        
+        console.log(name,description,website,location);
+        
         const file = req.file;
 
         //cloudany aayega
-
-        const updateData = {name,description,website,location};
+    const fileUri = getDataUri(file)
+    const cloudResponse = await cloudinary.uploader.upload(fileUri.content) // it will upload the file to cloudinary
+    const logo = cloudResponse.secure_url;//u will get the logo from here
+   
+        const updateData = {name,description,website,location,logo};
         const company = await Company.findByIdAndUpdate(req.params.id,updateData,{new:true})
 
         if(!company){
