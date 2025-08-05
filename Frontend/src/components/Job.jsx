@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button } from './button'
 import { Bookmark } from "lucide-react"; // ✅ Correct component name
-import { Avatar, AvatarImage } from '@radix-ui/react-avatar';
+import { Avatar, AvatarImage } from './ui/avatar';
 import { Badge } from './ui/badge'
 import { useNavigate } from 'react-router-dom';
 
@@ -28,9 +28,8 @@ const Job = ({job}) => {
         <div className='p-6' variant="outline" size="icon">
             <Button>
             <Avatar>
-                <AvatarImage src='https://www.shutterstock.com/image-vector/business-abstract-logo-symbol-concept-600w-1263069847.jpg' 
-               alt="Company Logo"
-    className="w-10 h-10 object-cover"/>
+               <AvatarImage src={job?.company?.logo} 
+               alt="Company Logo"/>
             </Avatar>
         </Button>
         <div>

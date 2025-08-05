@@ -1,9 +1,9 @@
-import React from 'react'
-import { useState,useEffect } from 'react'
+import { useEffect } from 'react'
 import { JOB_API_END_POINT } from '@/utils/constant'
 import { useDispatch } from 'react-redux'
-import { setAllAdminJobs, setAllJobs } from '@/redux/jobSlice'
+import { setAllAdminJobs } from '@/redux/jobSlice'
 import axios from 'axios'
+
 const UseGetAllAdminJobs = () => {
 
     const dispatch = useDispatch()
@@ -21,7 +21,7 @@ const UseGetAllAdminJobs = () => {
     }
         }
         fetchAllAdminJobs()
-    },[dispatch])//dispatch from ai taken
+    },[])//dispatch from ai taken
 }
 
 export default UseGetAllAdminJobs

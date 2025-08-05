@@ -182,7 +182,7 @@ export const updataStatus = async(req,res)=>{
         application.status = status.toLowerCase();
         await application.save();
         return res.status(200).json({
-            message:"Status updated succesfully",
+            message:"Status updated succesfsully",
             success:true
         })
     }

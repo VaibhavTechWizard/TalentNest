@@ -8,16 +8,19 @@ import useGetAllCompanies from '@/hooks/useGetAllCompanies'
 import { useDispatch } from 'react-redux'
 import { setSearchCompanyByText } from '@/redux/companySlice'
 import AdminJobsTable from './AdminJobsTable'
-import UseGetAllAdminJobs from '@/hooks/UseGetAllAdminJobs'
-
+import useGetAllAdminJobs from '@/hooks/UseGetAllAdminJobs'
+import { setSearchJobsByText } from '@/redux/jobSlice'
+       
 
 const AdminJobs = () => {
-  UseGetAllAdminJobs();
+  useGetAllAdminJobs();
   const[input,setInput] = useState("")
     const navigate = useNavigate(); 
     const dispatch = useDispatch()
      useEffect(()=>{
-      dispatch(setSearchCompanyByText(input)) // it will filter the company using comlanySlice 
+      dispatch(setSearchJobsByText(input)) // it will filter the company using comlanySlice 
+      //console.log(input);
+      
      },[input]); 
   return (
     <div>
@@ -26,7 +29,7 @@ const AdminJobs = () => {
             <div className='flex items-center justify-between my-5'>
                 <Input 
                 className="w-fit"
-                 placeholder="Filter by name"
+                 placeholder="Filter by name, role"
                  onChange={(e)=>setInput(e.target.value)}
                  />
            

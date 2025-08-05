@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import Navbar from "./shared/Navbar";
-// import { Avatar } from "@radix-ui/react-avatar";
-// import { AvatarImage } from "@radix-ui/react-avatar";
 import { Button } from "./button";
 import { Pen, Mail, Contact } from "lucide-react";
 import { Badge } from "./ui/badge";
@@ -10,10 +8,12 @@ import AppliedJobTable from "./AppliedJobTable";
 import { Avatar, AvatarImage } from "./ui/avatar";
 import UpdateProfileDialog from "./UpdateProfileDialog";
 import { useSelector } from "react-redux";
+import useGetAppliedJobs from "@/hooks/useGetAppliedJobs";
 // const skills = ["Html", "css", "Javascript", "React"];
 const isResume = true;
 
 const Profile = () => {
+  useGetAppliedJobs(); // here we get all applied jobs
   const [open, setOpen] = useState(false);
   const { user } = useSelector((store) => store.auth);
   return (
