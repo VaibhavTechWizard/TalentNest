@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from './button'
-import { Bookmark } from "lucide-react"; // ✅ Correct component name
+import { Bookmark,BookmarkCheck } from "lucide-react"; // ✅ Correct component name
 import { Avatar, AvatarImage } from './ui/avatar';
 import { Badge } from './ui/badge'
 import { useNavigate } from 'react-router-dom';
@@ -8,6 +8,14 @@ import { useNavigate } from 'react-router-dom';
 const Job = ({job}) => {
   const navigate = useNavigate();
   // const jobId = "gdfvdfvvd";
+
+
+      // TEMP local state (later fetch/save from backend)
+      const [bookmarked,setBookmarked] = React.useState(false)
+  
+      const handleBookmark = ()=>{
+          setBookmarked(!bookmarked)
+      }
 
   const daysAgoFunction = (mongodbTime) => {
     const createdAt = new Date(mongodbTime);
@@ -40,11 +48,14 @@ const Job = ({job}) => {
         
         <div>
             <h1 className='font-bold text-lg my-2'>{job?.title}</h1>
-            <p className='text-sm text-gray-600'>{job?.description}</p>
+            {/* <p className='text-sm text-gray-600 line-clamp-2'>{job?.description}</p> */}
+            <p className='text-sm text-gray-600 h-24 overflow-y-auto'>{job?.description}</p> 
+            {/* scrolling property to desciption */}
+
         </div>
           <div className='flex items-center gap-2 mt-4'>
             <Badge className='text-blue-700 font-bold' variant="ghost">{job?.position} Position</Badge>
-            <Badge className=' text-[#F83002]' variant="ghost">{job?.jobTypes}</Badge>
+            <Badge className=' text-[#F83002]' variant="ghost">{job?.jobType}</Badge>
             <Badge className='text-[#7209b7] font-bold' variant="ghost">{job?.salary} LPA</Badge>
         </div>
         <div className='flex items-center gap-4 mt-4'>

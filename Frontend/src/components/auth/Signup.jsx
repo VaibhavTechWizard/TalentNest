@@ -125,7 +125,7 @@
 
 
 
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../shared/Navbar";
 import { Label } from "@radix-ui/react-label";
 import { useState } from "react";
@@ -156,7 +156,7 @@ const Signup = () => {
       file:"",
     });
     
-    const loading = useSelector(store =>store.auth.loading);
+    const {loading,user} = useSelector(store =>store.auth);
      const navigate = useNavigate();
      const dispatch = useDispatch();
       
@@ -206,6 +206,14 @@ const Signup = () => {
       }
       
     }
+
+    // it prevent the user when click to signup when he is  logged in
+    useEffect(()=>{
+      if(user){
+        navigate("/")
+
+      }
+    },[])
   return (
     <div>
       <Navbar />

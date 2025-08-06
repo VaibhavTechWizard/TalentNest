@@ -1,14 +1,17 @@
 import { Badge } from './ui/badge'
 import React from 'react'
-import { Avatar,AvatarImage } from '@radix-ui/react-avatar'
+import { Avatar,AvatarImage } from './ui/avatar'
+import { useNavigate } from 'react-router-dom'
 const LatestJobCards = ({job}) => {
+   const navigate = useNavigate()
   return (
-    <div className='p-5 rounded-md shadow-xl bg-white border border-gray-100 cursor-pointer'>
+   
+    <div onClick={()=>navigate(`/description/${job._id}`)} className='p-5 rounded-md shadow-xl bg-white border border-gray-100 cursor-pointer'>
         <div>
           <Avatar>
-                <AvatarImage src='https://www.shutterstock.com/image-vector/business-abstract-logo-symbol-concept-600w-1263069847.jpg' 
+                <AvatarImage src={job?.company?.logo} 
                alt="Company Logo"
-    className="w-10 h-10 object-cover"/>
+   />
             </Avatar>
             <h1 className='font-medium text-large'>{job?.company?.name}</h1>
         <p className='text-sm text-gray-500'>India</p>

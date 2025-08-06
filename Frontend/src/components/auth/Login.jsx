@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../shared/Navbar";
 import { Label } from "@radix-ui/react-label";
 import axios from "axios";
@@ -20,7 +20,9 @@ import { Loader, Loader2 } from "lucide-react";
 
 const Login = () => {
 
-  const loading = useSelector(store=>store.auth.loading)
+  // const {loading,user} = useSelector(store=>store.auth.loading)
+  const {loading,user} = useSelector(store=>store.auth)
+
   const navigate = useNavigate();
 const dispatch = useDispatch();
   const[input,setInput] = useState({
@@ -61,7 +63,13 @@ const dispatch = useDispatch();
         dispatch(setLoading(false))
       }
     }
+    // it prevent the user when click to signup when he is  logged in
 
+useEffect(()=>{
+  if(user){
+    navigate("/")
+  }
+},[user,navigate])
   return (
     <div>
       <Navbar />

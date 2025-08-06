@@ -17,7 +17,7 @@ export const Browse = () => {
         }
     },[])
   return (
-    <div className='max-w-7wl mx-auto my-10'>
+    <div className='max-w-7wl mx-auto my-1'>
         <Navbar/>
         <div>
             <h1 className='font-bold text-xl my-10'>Search Result ({allJobs.length})</h1>
@@ -27,7 +27,6 @@ export const Browse = () => {
                     return(
                         // <Job key={job.id} job={job} />
                         <Job key={job._id} job={job} />
-
                     )
                 })
             }
